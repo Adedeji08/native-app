@@ -1,8 +1,23 @@
 import { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Button,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  Touchable,
+  TouchableHighlight,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 
 export default function App() {
   const [name, setName] = useState("");
+  const [send, setSend] = useState(false);
+  function onPressHandler() {
+    setSend(!send);
+  }
   return (
     <View style={styles.body}>
       <Text style={styles.text}>Please write your name:</Text>
@@ -13,7 +28,35 @@ export default function App() {
         placeholder="e.g Eben"
         secureTextEntry
       />
-      <Text style={styles.text}>Your name is {name}</Text>
+      {/* <Button
+        title={send ? "Clear" : "Send"}
+        onPress={onPressHandler}
+        disabled={send}
+        color="#00f"
+      /> */}
+
+      {/* <TouchableWithoutFeedback onPress={onPressHandler} style={styles.button}>
+        <View style={styles.button}>
+          <Text style={styles.text}>{send ? "Clear" : "Send"}</Text>
+        </View>
+      </TouchableWithoutFeedback> */}
+
+      <Pressable
+        style={({ pressed }) => [
+          { backgroundColor: pressed ? "#dddddd" : "#00ff00" },
+          styles.button
+        ]}
+        onPress={onPressHandler}
+        hitSlop={{top: 10, bottom: 10, left: 10, right:10}}
+        // disabled={send}
+        android_ripple={{color: '#00f'}}
+      >
+        <Text style={styles.text}>{send ? "Clear" : "Send"}</Text>
+      </Pressable>
+
+      {send ? (
+        <Text style={styles.text}>You are registered as {name}</Text>
+      ) : null}
     </View>
   );
 }
@@ -36,5 +79,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     textAlign: "center",
     fontSize: 15,
+    marginBottom: 10,
+  },
+  button: {
+    width: 150,
+    height: 50,
+    alignItems: "center",
+    borderRadius: 12,
   },
 });
