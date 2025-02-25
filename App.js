@@ -1,22 +1,44 @@
 import { useState } from "react";
 import {
-  Button,
+  Alert,
   Pressable,
   StyleSheet,
   Text,
   TextInput,
-  Touchable,
-  TouchableHighlight,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
+  ToastAndroid,
   View,
 } from "react-native";
 
 export default function App() {
   const [name, setName] = useState("");
   const [send, setSend] = useState(false);
+  const [showAlert, setShowAlert] = useState(true);
   function onPressHandler() {
-    setSend(!send);
+    if (name.length > 3) {
+      setSend(!send);
+    } else {
+      // Alert.alert(
+      //   "Warning",
+      //   `The name must be longer than 3 characters`,
+      //   [
+      //     {
+      //       text: "Later",
+      //       onPress: () => {
+      //         console.warn("Do not show again!");
+      //         setShowAlert(false);
+      //       },
+      //     },
+      //     { text: "Cancel", onPress: () => console.warn("Cancerl Pressed!") },
+      //     { text: "OK", onPress: () => console.warn("OK Pressed!") },
+      //   ],
+      //   { cancelable: true, onDismiss: () => console.warn("Alert dismissed!") }
+      // );
+      ToastAndroid.showWithGravity('The name must be longer than 3 characters',
+      ToastAndroid.LONG,
+      ToastAndroid.TOP,
+     
+      )
+    }
   }
   return (
     <View style={styles.body}>
@@ -28,28 +50,16 @@ export default function App() {
         placeholder="e.g Eben"
         secureTextEntry
       />
-      {/* <Button
-        title={send ? "Clear" : "Send"}
-        onPress={onPressHandler}
-        disabled={send}
-        color="#00f"
-      /> */}
-
-      {/* <TouchableWithoutFeedback onPress={onPressHandler} style={styles.button}>
-        <View style={styles.button}>
-          <Text style={styles.text}>{send ? "Clear" : "Send"}</Text>
-        </View>
-      </TouchableWithoutFeedback> */}
 
       <Pressable
         style={({ pressed }) => [
           { backgroundColor: pressed ? "#dddddd" : "#00ff00" },
-          styles.button
+          styles.button,
         ]}
         onPress={onPressHandler}
-        hitSlop={{top: 10, bottom: 10, left: 10, right:10}}
+        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
         // disabled={send}
-        android_ripple={{color: '#00f'}}
+        android_ripple={{ color: "#00f" }}
       >
         <Text style={styles.text}>{send ? "Clear" : "Send"}</Text>
       </Pressable>
