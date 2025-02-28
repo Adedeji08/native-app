@@ -36,7 +36,6 @@ export default function App() {
       ToastAndroid.showWithGravity('The name must be longer than 3 characters',
       ToastAndroid.LONG,
       ToastAndroid.TOP,
-     
       )
     }
   }
