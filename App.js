@@ -1,6 +1,8 @@
 import { useState } from "react";
 import {
   Alert,
+  Image,
+  ImageBackground,
   Modal,
   Pressable,
   StyleSheet,
@@ -22,7 +24,7 @@ export default function App() {
     }
   }
   return (
-    <View style={styles.body}>
+    <ImageBackground source={{uri:'https://www.bhg.com/thmb/H9VV9JNnKl-H1faFXnPlQfNprYw=/1799x0/filters:no_upscale():strip_icc()/white-modern-house-curved-patio-archway-c0a4a3b3-aa51b24d14d0464ea15d36e05aa85ac9.jpg'}} style={styles.body}>
       <Modal
         visible={showWarning}
         transparent
@@ -36,10 +38,16 @@ export default function App() {
               <Text style={styles.text}>WARNING!</Text>
             </View>
             <View style={styles.warning_body}>
-              <Text style={styles.text}>The text must be longer than 3 characters</Text>
+              <Text style={styles.text}>
+                The text must be longer than 3 characters
+              </Text>
             </View>
-            <Pressable  android_ripple={{ color: "#fff" }} onPress={() => setShowWarning(false)} style={styles.warning_button}>
-            <Text style={styles.text}>OK</Text>
+            <Pressable
+              android_ripple={{ color: "#fff" }}
+              onPress={() => setShowWarning(false)}
+              style={styles.warning_button}
+            >
+              <Text style={styles.text}>OK</Text>
             </Pressable>
           </View>
         </View>
@@ -60,7 +68,6 @@ export default function App() {
           { backgroundColor: pressed ? "#dddddd" : "#00ff00" },
           styles.button,
         ]}
-        
         onPress={onPressHandler}
         hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
         // disabled={send}
@@ -70,9 +77,25 @@ export default function App() {
       </Pressable>
 
       {send ? (
-        <Text style={styles.text}>You are registered as {name}</Text>
-      ) : null}
-    </View>
+        <View style={styles}>
+          <Text style={styles.text}>You are registered as {name}</Text>
+          <Image
+            resizeMode="stretch"
+            style={styles.image}
+            source={require("./assets/done.png")}
+          />
+        </View>
+      ) : (
+        <Image
+          resizeMode="stretch"
+          style={styles.image}
+          source={{
+            uri: "https://www.citypng.com/public/uploads/preview/png-orange-error-warning-icon-701751694975098vxx0mgchjm.png",
+          }}
+          blurRadius={5}
+        />
+      )}
+    </ImageBackground>
   );
 }
 
@@ -80,13 +103,13 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#fff",
+    marginTop: 50,
   },
   text: {
     color: "#000",
     fontSize: 20,
     margin: 10,
-    textAlign: 'center'
+    textAlign: "center",
   },
   input: {
     width: 200,
@@ -133,8 +156,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   warning_button: {
-    backgroundColor: '#00ffff',
+    backgroundColor: "#00ffff",
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
-  }
+  },
+  image: {
+    width: 100,
+    height: 100,
+    margin: 10,
+  },
 });
